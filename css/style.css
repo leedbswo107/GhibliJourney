@@ -1,0 +1,30 @@
+@charset 'utf-8';
+
+:root {
+  --steelBlue: #5fb4c9;
+  --lightBlue: #8fcad7;
+  --lightBeige: #efefe7;
+  --cream: #fefdf5;
+  --size: 16px;
+}
+body > div {
+  display: flex;
+}
+.hd {
+  width: 100px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--steelBlue);
+}
+.hd img {
+  width: 50%;
+}
+.hd .tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(var(--size) * 1.2);
+  gap: var(--size) 0;
+  color: var(--cream);
+}
