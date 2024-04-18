@@ -9,22 +9,76 @@
 }
 body > div {
   display: flex;
+  background-color: var(--lightBeige);
+  -webkit-overflow-scrolling: touch; /* 스크롤 부드럽게 처리 */
 }
 .hd {
+  display: flex;
+  position: fixed;
   width: 100px;
   height: 100vh;
-  display: flex;
   flex-direction: column;
   background-color: var(--steelBlue);
 }
+.hd h1 {
+  display: flex;
+  justify-content: center;
+  padding: var(--size) 0;
+}
 .hd img {
-  width: 50%;
+  width: 70%;
 }
 .hd .tools {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: calc(var(--size) * 1.2);
-  gap: var(--size) 0;
+  padding-top: var(--size);
+  gap: calc(var(--size) * 2) 0;
   color: var(--cream);
+}
+.hd .tools > * {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.hd .tools > *:hover,
+.hd .tools > *:focus {
+  color: var(--lightBlue);
+}
+.vertical {
+  width: 100%;
+}
+.banner {
+  width: 100%;
+  height: 400px;
+  background-color: var(--cream);
+}
+.listOfWorks .works {
+  padding: calc(var(--size) / 2) calc(var(--size) / 2) calc(var(--size) / 2)
+    calc(100px + var(--size) / 2);
+  padding-left: 110px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: var(--size) calc(var(--size) / 2);
+}
+.works .work {
+  border-radius: calc(var(--size) * 2);
+  overflow: hidden;
+  transition: 0.3s;
+  opacity: 1;
+}
+.works .work:hover img {
+  /* opacity: 0.3; */
+  transform: scale(1.2);
+}
+.works img {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+}
+
+.foot {
+  background-color: var(--lightBlue);
+  height: 400px;
+  width: 100%;
 }
