@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>GhibliJourney</title>
     <link rel="stylesheet" href="./css/my_reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
     <link
@@ -18,7 +18,7 @@
   <body>
     <div class="wrap">
       <header class="hd">
-        <h1><img src="./img/logo.png" alt="logo" /></h1>
+        <h1><img src="https://www.ghibli.jp/img/home.png" alt="logo" /></h1>
         <nav class="tools">
           <i class="fa-solid fa-magnifying-glass"></i>
           <i class="fa-regular fa-folder"></i>
@@ -28,16 +28,45 @@
       </header>
       <div class="vertical">
         <main>
-          <section class="banner"></section>
+          <section class="banner">
+            <h2 hidden>banner</h2>
+            <div class="slideWrap">
+              <ul class="slider">
+                <li class="slide">
+                  <div class="info">
+                    <p class="infot">
+                      <strong>이웃집</strong>
+                      <strong>토토로</strong>
+                      <span>감독</span>
+                      <!-- <strong>제목</strong>
+                      <span>감독</span>
+                      <span>러닝타임</span>
+                      <span>출시연도</span>
+                      <span>로튼 토마토 지수</span> -->
+                    </p>
+                  </div>
+                  <img src="./img/bannertest.webp" alt="banner" />
+                </li>
+              </ul>
+              <div class="gradient"></div>
+            </div>
+          </section>
           <section class="listOfWorks">
+            <h2 hidden>works</h2>
+            <div class="totoro"></div>
+            <div class="catBus"></div>
             <ul class="works">
-              <!-- <li class="work">
+              <!-- work list -->
+              <li class="work">
                 <img
                   src="https://joyposter.cafe24.com/A2poster/AJA/AJA-007.jpg"
                   alt="센과치히로"
                 />
-              </li> -->
-              <!-- work list -->
+
+                <p class="rtScore">
+                  <img src="./img/rottonScore1.svg" alt="" /><span>95%</span>
+                </p>
+              </li>
             </ul>
           </section>
         </main>
