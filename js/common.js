@@ -1,36 +1,25 @@
 const works = document.querySelector('.works');
 const slider = document.querySelector('.slider');
-
-// test
-const infoDial = document.querySelector('#infoDial');
 const modalBack = document.querySelector('.modalBack');
 const modal = document.querySelector('.modal');
-const btnClose = document.querySelector('.close');
+const closeBtn = document.querySelector('.close');
 
-// const work = document.querySelector('.work');
-// const slide = document.querySelector('.slide');
-// const test = document.querySelector('.test');
-/**
- * rotten tomato score
- * 60% under -> rottenScore2.svg
- * 60% over -> rottenScore1.svg
- */
-
-function getWorks() {
-  getData();
+async function getWorks() {
+  const data = await getData();
+  renderWorks(data);
 }
 function renderWorks(jsonData) {
   if (jsonData.length === 0) {
     works.innerHTML = `<li class="noList">검색 결과가 없습니다.</li>`;
     return;
   }
+  console.log(jsonData);
   const bannerHtml = jsonData
     .map((slider) => createBannerImgHtml(slider))
     .join('');
   const worksHtml = jsonData.map((works) => createWorkHtml(works)).join('');
   works.innerHTML = worksHtml;
   slider.innerHTML = bannerHtml;
-  // const modalHtml = jsonData.map((works) => createModal(works).join(''));
 }
 function createBannerImgHtml(slider) {
   return `
@@ -62,55 +51,56 @@ function createWorkHtml(works) {
 `;
 }
 function createModal(works) {
-  getData();
-  console.log();
   return `
-  <div class="modal">
     <div class="modalBanner">
       <div class="gradient"></div>
-      <img src="./img/bannertest.webp" alt="test" />
+      <img src="${works.movie_banner}" alt="test" />
     </div>
     <div class="modalPoster">
       <img
-        src="https://upload.wikimedia.org/wikipedia/ko/b/bc/%EC%84%BC%EA%B3%BC_%EC%B9%98%ED%9E%88%EB%A1%9C%EC%9D%98_%ED%96%89%EB%B0%A9%EB%B6%88%EB%AA%85_%ED%8F%AC%EC%8A%A4%ED%84%B0.jpg"
+        src="${works.image}"
         alt="포스터"
       />
     </div>
     <p class="detail">
-      <strong>센과 치히로의 행방불명</strong>
-      <span>year</span>
-      <span>character</span>
-      <span>director</span>
-      <span>runtime</span>
-      <span>rtScore</span>
-      description
+      <strong>${works.title}</strong>
+      <span>${works.release_date}</span>
+      <span>${works.people}</span>
+      <span>${works.director}</span>
+      <span>${works.running_time}</span>
+      <span>${works.rt_score}%</span>
+      ${works.description}
     </p>
-    <div class="close">
-      <span></span>
-      <span></span>
-    </div>
-  </div>
   `;
 }
-
+async function getModalDetail(e) {
+  const dataSet = e.target.dataset.id;
+  const modalDetail = await getData(dataSet);
+  const modalHtml = createModal(modalDetail[0]);
+  return modalHtml;
+}
 // modal click event area
-works.addEventListener('click', (e) => {
+works.addEventListener('click', async (e) => {
   if (e.target.tagName !== 'IMG') return;
-  modal.classList.add('on');
+  const modalHtml = await getModalDetail(e);
+  modal.innerHTML = modalHtml;
   modalBack.classList.add('on');
   modal.scrollTop = 0;
 });
-btnClose.addEventListener('click', () => {
-  modal.classList.remove('on');
+closeBtn.addEventListener('click', () => {
   modalBack.classList.remove('on');
+  modal.innerHTML.remove;
+  // modal.innerHTML = '';
 });
-async function getData() {
+async function getData(data) {
   const url = new URL('https://ghibliapi.vercel.app/films/');
   try {
+    if (data) {
+      url.searchParams.append('id', data);
+    }
     const response = await fetch(url);
     const jsonData = await response.json();
-    console.log(jsonData);
-    renderWorks(jsonData);
+    return jsonData;
   } catch (error) {
     console.error(error);
   }
