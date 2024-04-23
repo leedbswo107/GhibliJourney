@@ -131,10 +131,6 @@ body > div {
 .banner .info strong {
   font-size: calc(var(--size) * 4);
 }
-.banner .info span {
-  /* font-size: cal; */
-}
-
 .banner .slide > img {
   width: calc(100% - 100px);
   height: 100%;
@@ -216,19 +212,19 @@ body > div {
   height: calc(100% * 0.7);
   background-color: white;
   border-radius: calc(var(--size) * 2);
-  z-index: 100;
+  /* z-index: 100; */
   overflow: hidden;
   overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s;
+  /* opacity: 0; */
+  /* visibility: hidden; */
+  /* transition: 0.3s; */
 }
-.listOfWorks .modal.on {
+/* .listOfWorks .modal.on {
   opacity: 1;
   visibility: visible;
-}
+} */
 .listOfWorks .modal::-webkit-scrollbar {
   display: none;
 }
@@ -280,8 +276,8 @@ body > div {
 .modal .detail span {
   padding-bottom: var(--size);
 }
-.listOfWorks .close {
-  position: fixed;
+.modalBack .close {
+  position: absolute;
   width: calc(var(--size) * 2);
   height: calc(var(--size) * 2);
   top: var(--size);
@@ -293,6 +289,7 @@ body > div {
   background-color: black;
   border-radius: 50%;
   transition: 0.3s;
+  /* z-index: 999; */
 }
 .listOfWorks .close:hover {
   background-color: white;
