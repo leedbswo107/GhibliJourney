@@ -1,5 +1,9 @@
 const works = document.querySelector('.works');
 const slider = document.querySelector('.slider');
+
+// test
+const infoDial = document.querySelector('#infoDial');
+// const work = document.querySelector('.work');
 // const slide = document.querySelector('.slide');
 // const test = document.querySelector('.test');
 /**
@@ -19,8 +23,8 @@ function renderWorks(jsonData) {
   const bannerHtml = jsonData
     .map((slider) => createBannerImgHtml(slider))
     .join('');
-  const worksHtml = jsonData.map((works) => createWorksImgHtml(works)).join('');
-  // works.innerHTML = worksHtml;
+  const worksHtml = jsonData.map((works) => createWorkHtml(works)).join('');
+  works.innerHTML = worksHtml;
   slider.innerHTML = bannerHtml;
 }
 function createBannerImgHtml(slider) {
@@ -36,14 +40,28 @@ function createBannerImgHtml(slider) {
   </li>
   `;
 }
-function createWorksImgHtml(works) {
-  console.log('Score : ', works.rt_score);
+function createWorkHtml(works) {
+  let score = parseInt(works.rt_score);
+  let rtScoreImg = '';
+  score < 60
+    ? (rtScoreImg = '../img/rottenScore2.svg')
+    : (rtScoreImg = '../img/rottenScore1.svg');
   return `
   <li class="work">
   <img src="${works.image}" alt="${works.original_title}"/>
+  <p class="rtScore">
+  <strong>${works.original_title}</strong>
+  <span><img src="${rtScoreImg}" alt="" />${score}%</span>
+  </p>
   </li>
 `;
 }
+
+// modal click event area
+works.addEventListener('click', (e) => {
+  if (e.target.tagName !== 'IMG') return;
+  console.log('test');
+});
 async function getData() {
   const url = new URL('https://ghibliapi.vercel.app/films/');
   try {
@@ -55,6 +73,7 @@ async function getData() {
     console.error(error);
   }
 }
+
 // document.addEventListener('DOMContentLoaded', function () {
 //   setTimeout(() => {
 //     test.innerHTML = 'DOM content has been loaded';
