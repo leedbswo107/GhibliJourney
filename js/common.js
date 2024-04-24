@@ -2,7 +2,12 @@ const works = document.querySelector('.works');
 const slider = document.querySelector('.slider');
 const modalBack = document.querySelector('.modalBack');
 const modal = document.querySelector('.modal');
-const closeBtn = document.querySelector('.close');
+const modalCloseBtn = document.querySelector('.modalBack .close');
+const searchBtn = document.querySelector('.search');
+const searchBack = document.querySelector('.searchBack');
+const searchTitle = document.querySelector('.searchTitle');
+const searchCloseBtn = document.querySelector('.searchBack .close');
+const submitBtn = document.querySelector('.submit');
 
 async function getWorks() {
   const data = await getData();
@@ -64,18 +69,17 @@ function createModal(works) {
     </div>
     <p class="detail">
       <strong>${works.title}</strong>
-      <span>${works.release_date}</span>
-      <span>${works.people}</span>
-      <span>${works.director}</span>
-      <span>${works.running_time}</span>
-      <span>${works.rt_score}%</span>
+      <span>Date          : ${works.release_date}</span>
+      <span>Director      : ${works.director}</span>
+      <span>Runtime       : ${works.running_time}</span>
+      <span>Rotten Tomato : ${works.rt_score}%</span>
       ${works.description}
     </p>
   `;
 }
 async function getModalDetail(e) {
   const dataSet = e.target.dataset.id;
-  const modalDetail = await getData(dataSet);
+  const modalDetail = await getData(dataSet, null);
   const modalHtml = createModal(modalDetail[0]);
   return modalHtml;
 }
@@ -87,17 +91,34 @@ works.addEventListener('click', async (e) => {
   modalBack.classList.add('on');
   modal.scrollTop = 0;
 });
-closeBtn.addEventListener('click', () => {
+modalCloseBtn.addEventListener('click', () => {
   modalBack.classList.remove('on');
   modal.innerHTML.remove;
-  // modal.innerHTML = '';
 });
-async function getData(data) {
+searchBtn.addEventListener('click', () => {
+  searchBack.classList.add('on');
+});
+searchCloseBtn.addEventListener('click', () => {
+  searchTitle.value = '';
+  searchBack.classList.remove('on');
+});
+submitBtn.addEventListener('click', () => {
+  let inputValue = searchTitle.value;
+  searchBack.classList.remove('on');
+  search(inputValue);
+  inputValue = '';
+  searchTitle.value = '';
+});
+async function search(value) {
+  console.log(value);
+  await getData(null, value);
+}
+async function getData(id, search) {
   const url = new URL('https://ghibliapi.vercel.app/films/');
   try {
-    if (data) {
-      url.searchParams.append('id', data);
-    }
+    if (id) url.searchParams.append('id', id);
+    if (search) url.searchParams.append('q', search);
+
     const response = await fetch(url);
     const jsonData = await response.json();
     return jsonData;
