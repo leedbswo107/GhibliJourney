@@ -327,7 +327,6 @@ body.on {
   right: 0;
   backdrop-filter: blur(0);
   z-index: -1;
-  transition: 0.3s;
 }
 .modalBack.on {
   backdrop-filter: blur(3px);
@@ -345,7 +344,6 @@ body.on {
   border-radius: calc(var(--size) * 2);
   overflow: hidden;
   overflow-y: scroll;
-  transition: 0.3s;
 }
 .listOfWorks .modal::-webkit-scrollbar {
   display: none;
