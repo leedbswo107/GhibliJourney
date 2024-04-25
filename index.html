@@ -7,14 +7,14 @@
     <link rel="icon" type="image/x-icon" href="./img/favicon.png" />
     <link rel="stylesheet" href="./css/my_reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
       integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="./js/common.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script type="module" src="./js/common.js" defer></script>
   </head>
   <body>
     <div class="wrap">
@@ -47,9 +47,9 @@
           </div>
           <section class="banner">
             <h2 hidden>banner</h2>
-            <div class="slideWrap">
+            <div class="swiper slideWrap">
+              <ul class="swiper-wrapper slider"></ul>
               <div class="gradient"></div>
-              <ul class="slider"></ul>
             </div>
           </section>
           <section class="listOfWorks">
@@ -66,7 +66,20 @@
             </div>
           </section>
         </main>
-        <footer class="foot"></footer>
+        <footer class="foot">
+          <div class="contact">
+            <strong>Keep Connect</strong>
+            <p>
+              All Ghibli Studios' works from before to now.<br/>
+              Check out Ghibli Studio's latest work and explore its predecessors
+            </p>
+            <label>
+              <input type="email" class="emailInput" placeholder="Your Email">
+              <input type="submit" class="emailSubmit" value="Submit">
+            </label>
+          </div>
+          <div class="ftLogo"><img src="./img/footLogo.png" alt="footLogo"></div>
+        </footer>
       </div>
     </div>
   </body>

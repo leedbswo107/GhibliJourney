@@ -1,28 +1,33 @@
 # GhibliJourney
 
+-
+
 ## :gem: 사용한 기술
 
 ![html5](https://img.shields.io/badge/html5-E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white)
 ![css3](https://img.shields.io/badge/css3-1572B6.svg?&style=for-the-badge&logo=css3&logoColor=white)
 ![javascript](https://img.shields.io/badge/javascript-F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=white)
-
-<!-- ![swiper](https://img.shields.io/badge/swiper-6332F6.svg?&style=for-the-badge&logo=swiper&logoColor=white) -->
-
+![swiper](https://img.shields.io/badge/swiper-6332F6.svg?&style=for-the-badge&logo=swiper&logoColor=white)
 ![npm](https://img.shields.io/badge/npm-CB3837.svg?&style=for-the-badge&logo=npm&logoColor=white)
 
 ## :airplane: 결과
 
+<img src="./img/result.jpeg" width="100%"/>
+
 ## :clipboard: 구현할 기능 목록
 
-- 반응형으로 디자인 적용.
-- 자동 슬라이드 효과 적용.
+- 반응형 디자인
+- 자동 슬라이드 효과
+- api를 활용한 데이터 제어
+- 작품 클릭시 상세 정보 modal 출력
+- 작품 호버시 제목 및 로튼토마토 지수 출력
 
 ## :warning: 해결해야하는 부분
 
 | 문제 사진 | 문제 내용                                                                                                                                               | 해결                                                                               |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 |           | 포스터를 클릭하면 해당 포스터가 나타내는 영화의 상세정보를 modal에서 확인해야하는데 클릭 이벤트와 render 는 별도로 있기에 데이터를 별도로 연결해야한다. | api에 id 를 dataset에 주어 포스터를 클릭하면 그 값을 전달해 디테일에 접근하게 해결 |
-|           | api에서 가져온 배너 이미지의 사이즈가 동일하지 않다.                                                                                                    | 해결중                                                                             |
+|           | api에서 가져온 배너 이미지의 사이즈가 동일하지 않다.                                                                                                    | api 데이터에는 직접 접근을 할 수 없기에                                            |
 
 ## :file_folder: 파일 구조 및 파일명
 
@@ -58,7 +63,7 @@
 
 ## 참고 사이트
 
-<!-- [swiper] <https://swiperjs.com/>   -->
-
-[api] <https://ghibliapi.vercel.app/>
-[mdn] <https://developer.mozilla.org/ko/>
+[swiper] <https://swiperjs.com/>  
+[api] <https://ghibliapi.vercel.app/>  
+[mdn] <https://developer.mozilla.org/ko/>  
+[rotten tomatoes] <https://www.rottentomatoes.com/>

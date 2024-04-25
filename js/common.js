@@ -3,6 +3,7 @@ const loadingBack = document.querySelector('.loadingBack');
 
 const works = document.querySelector('.works');
 const slider = document.querySelector('.slider');
+const slides = slider.querySelectorAll('.slide');
 
 const modalBack = document.querySelector('.modalBack');
 const modal = document.querySelector('.modal');
@@ -14,35 +15,8 @@ const searchBack = document.querySelector('.searchBack');
 const searchTitle = document.querySelector('.searchTitle');
 const searchCloseBtn = document.querySelector('.searchBack .close');
 
-// spacebar: 32, pageup: 33, pagedown: 34,
-//  end: 35, home: 36
-// left: 37, up: 38, right: 39, down: 40,
-const keys = { 32: 1, 33: 1, 34: 1, 35: 1, 36: 1, 37: 1, 38: 1, 39: 1, 40: 1 };
-let supportsPassive = false;
-try {
-  window.addEventListener(
-    'test',
-    null,
-    Object.defineProperty({}, 'passive', {
-      get: function () {
-        supportsPassive = true;
-      },
-    })
-  );
-} catch (e) {}
+const wrap = document.querySelector('body');
 
-let wheelOpt = supportsPassive ? { passive: false } : false;
-let wheelEvent =
-  'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-function preventDefault(e) {
-  e.preventDefault();
-}
-function preventDefaultForScrollKeys(e) {
-  if (keys[e.keyCode]) {
-    e.preventDefault();
-    return false;
-  }
-}
 async function getWorks() {
   const data = await getData();
   renderWorks(data);
@@ -57,17 +31,29 @@ function renderWorks(jsonData) {
     .join('');
   const worksHtml = jsonData.map((works) => createWorkHtml(works)).join('');
   [works.innerHTML, slider.innerHTML] = [worksHtml, bannerHtml];
+  let swiper = new Swiper('.slideWrap', {
+    effect: 'fade',
+    spaceBetween: 30,
+    slidesPerView: 1,
+    centeredSlides: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+  });
 }
 function createBannerImgHtml(slider) {
   return `
-  <li class="slide">
-  <div class="info">
-    <p class="infot">
-      <strong>${slider.title}</strong>
-      <span>${slider.director}</span>
-    </p>
-  </div>
-  <img src="${slider.movie_banner}" alt="banner" />
+  <li class="swiper-slide">
+    <div class="card">
+      <div class="info">
+        <p class="infoIn">
+          <strong>${slider.title}</strong>
+          <span>${slider.director}</span>
+        </p>
+      </div>
+      <img src="${slider.movie_banner}" alt="banner" />
+    </div>
   </li>
   `;
 }
@@ -91,12 +77,12 @@ function createModalHtml(works) {
   return `
     <div class="modalBanner">
       <div class="gradient"></div>
-      <img src="${works.movie_banner}" alt="test" />
+      <img src="${works.movie_banner}" alt="${works.original_title}" />
     </div>
     <div class="modalPoster">
       <img
         src="${works.image}"
-        alt="포스터"
+        alt="${works.original_title} poster"
       />
     </div>
     <p class="detail">
@@ -107,6 +93,10 @@ function createModalHtml(works) {
       <span>Rotten Tomato : ${works.rt_score}%</span>
       ${works.description}
     </p>
+    <div class="modalBottomImg">
+      <img src="./img/modalBottom.png" alt="modalBottom" />
+    </div>
+    
   `;
 }
 async function getModalDetail(e) {
@@ -115,21 +105,7 @@ async function getModalDetail(e) {
   const modalHtml = createModalHtml(modalDetail[0]);
   return modalHtml;
 }
-function disableScroll() {
-  window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
-  window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
-  window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
-  window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-}
-// call this to Enable
-function enableScroll() {
-  window.removeEventListener('DOMMouseScroll', preventDefault, false);
-  window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
-  window.removeEventListener('touchmove', preventDefault, wheelOpt);
-  window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
-}
 async function search(value) {
-  console.log(value);
   const searchData = await getData(null, value);
   renderWorks(searchData);
 }
@@ -153,19 +129,21 @@ works.addEventListener('click', async (e) => {
   modal.innerHTML = modalHtml;
   modalBack.classList.add('on');
   modal.scrollTop = 0;
-  disableScroll();
+  wrap.classList.add('on');
 });
 modalCloseBtn.addEventListener('click', () => {
   modalBack.classList.remove('on');
   modal.innerHTML.remove;
-  enableScroll();
+  wrap.classList.remove('on');
 });
 searchBtn.addEventListener('click', () => {
   searchBack.classList.add('on');
+  wrap.classList.add('on');
 });
 searchCloseBtn.addEventListener('click', () => {
   searchTitle.value = '';
   searchBack.classList.remove('on');
+  wrap.classList.remove('on');
 });
 submitBtn.addEventListener('click', () => {
   let inputValue = searchTitle.value;
@@ -173,15 +151,16 @@ submitBtn.addEventListener('click', () => {
   search(inputValue);
   inputValue = '';
   searchTitle.value = '';
+  wrap.classList.remove('on');
 });
 logo.addEventListener('click', () => {
   getWorks();
 });
 document.addEventListener('DOMContentLoaded', function () {
-  disableScroll();
+  wrap.classList.add('on');
   setTimeout(() => {
     loadingBack.classList.add('off');
-    enableScroll();
-  }, 5000);
+    wrap.classList.remove('on');
+  }, 3000);
 });
 getWorks();
