@@ -1,15 +1,25 @@
 @charset 'utf-8';
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 :root {
-  --testBack1: #ffcc80;
-  --testHd1: #836953;
-  --testBg1: #eed9c4;
+  --lightOrange: #ffcc80;
+  --woodBrown: #836953;
+  --beige: #eed9c4;
   --gray: #939396;
+  --footBrown: #4b382a;
   --size: 16px;
   font-size: var(--size);
+  font-family: 'Roboto', sans-serif;
+  min-width: 390px;
 }
 body > div {
   display: flex;
-  background-color: var(--testBg1);
+  background-color: var(--beige);
+  overflow: hidden;
+}
+body.on {
+  overflow: hidden;
+}
+.wrap {
   overflow: hidden;
 }
 .hd {
@@ -18,7 +28,7 @@ body > div {
   width: 100px;
   height: 100vh;
   flex-direction: column;
-  background-color: var(--testHd1);
+  background-color: var(--woodBrown);
   z-index: 100;
 }
 .hd h1 {
@@ -36,7 +46,7 @@ body > div {
   align-items: center;
   font-size: calc(var(--size) * 1.5);
   gap: calc(var(--size) * 2) 0;
-  color: var(--testBg1);
+  color: var(--beige);
 }
 .hd .tools > * {
   cursor: pointer;
@@ -44,10 +54,12 @@ body > div {
 }
 .hd .tools > *:hover,
 .hd .tools > *:focus {
-  color: var(--testBack1);
+  color: var(--lightOrange);
 }
 .hd .searchBack {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   backdrop-filter: blur(5px);
@@ -58,16 +70,19 @@ body > div {
   position: absolute;
   display: flex;
   align-items: center;
-  padding: calc(var(--size) * 0.5);
+  padding: calc(var(--size) / 2);
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--testBg1);
-  border-radius: var(--size);
+  background-color: var(--beige);
+  border: 3px solid var(--woodBrown);
+  border-radius: calc(var(--size) * 3);
+  overflow: hidden;
+  opacity: 0.8;
 }
 .hd .searchBack.on {
   visibility: visible;
-  z-index: 99;
+  z-index: 9999;
 }
 .searchBack .close {
   position: absolute;
@@ -113,8 +128,9 @@ body > div {
 .hd .searchInput .searchTitle {
   font-size: calc(var(--size) * 2);
   padding: calc(var(--size) * 0.5) calc(var(--size));
-  background-color: var(--testBg1);
-  color: var(--testHd1);
+  background-color: var(--beige);
+  color: var(--woodBrown);
+  opacity: 0.8;
   outline: none;
   border: none;
 }
@@ -126,18 +142,19 @@ body > div {
   background-color: transparent;
   font-size: calc(var(--size) * 1.5);
   padding: var(--size) calc(var(--size) * 0.5);
-  color: var(--testHd1);
+  color: var(--woodBrown);
   transition-property: color;
   transition-duration: 0.3s;
   transition-timing-function: linear;
 }
 .hd .searchInput .submit:hover {
-  color: var(--testBack1);
+  color: var(--lightOrange);
 }
 .loadingBack {
   display: flex;
   position: fixed;
   width: 100%;
+  left: 0;
   height: 100vh;
   backdrop-filter: blur(5px);
   background-color: black;
@@ -155,14 +172,15 @@ body > div {
   visibility: hidden;
 }
 .loadingBack.off .load {
-  transform: scale(100);
+  transform: scale(0);
 }
 .loadingBack .load {
+  min-width: 250px;
   border-radius: calc(var(--size) * 8);
   transform: scale(1);
   overflow: hidden;
   position: absolute;
-  transition: 2s;
+  transition: 0.3s;
   width: 30%;
 }
 .loadingBack .load img {
@@ -170,30 +188,34 @@ body > div {
   height: 100%;
 }
 .vertical {
-  width: 100%;
+  width: calc(100% - 100px);
+  margin-left: 100px;
 }
 .banner {
   width: 100%;
-  margin-left: 100px;
 }
 .banner .slideWrap {
   position: relative;
 }
-.banner .slider {
-  padding-top: 35%;
-  display: flex;
-  position: relative;
+.banner .slider li {
   overflow: hidden;
 }
-.banner .slide {
+.banner .slider {
+  overflow: hidden;
+  top: 0;
+}
+.banner .card {
+  width: 100%;
+  padding-top: 40%;
+  position: relative;
+}
+.banner .card > * {
   position: absolute;
+}
+.banner .card img {
+  width: 100%;
   top: 0;
   left: 0;
-  width: 100%;
-  z-index: -1;
-}
-.banner .slide.on {
-  z-index: 100;
 }
 .banner .info {
   display: flex;
@@ -201,10 +223,10 @@ body > div {
   align-items: flex-start;
   width: 50%;
   height: 100%;
-  position: absolute;
   top: 0;
-  left: -13%;
-  padding: calc(var(--size) * 2) 0 0 calc(var(--size) * 2);
+  left: -100px;
+  z-index: 5;
+  padding: calc(var(--size) * 4) 0 0 calc(var(--size) * 2);
   color: white;
   background: rgb(0, 0, 0);
   background: linear-gradient(
@@ -213,7 +235,7 @@ body > div {
     rgba(0, 0, 0, 0.7) 50%,
     rgba(0, 0, 0, 0) 100%
   );
-  transform: skew(-25deg);
+  transform: skew(-15deg);
 }
 .banner .gradient {
   position: absolute;
@@ -231,17 +253,16 @@ body > div {
     rgba(238, 217, 196, 0) 100%
   );
 }
-.banner .info .infot {
+.banner .info .infoIn {
   display: flex;
   gap: calc(var(--size) * 2) 0;
   flex-direction: column;
-  transform: translateX(100px) skew(25deg);
+  transform: translateX(100px) skew(15deg);
 }
 .banner .info strong {
   font-size: calc(var(--size) * 4);
-}
-.banner .slide > img {
   width: 100%;
+  transition: 0.3s;
 }
 .listOfWorks {
   position: relative;
@@ -254,8 +275,7 @@ body > div {
   background-image: url('../img/movingTotoro.gif');
   background-size: cover;
   background-position: center;
-  z-index: 99;
-  animation: moving 50s linear infinite;
+  animation: totoroMoving 50s linear infinite;
 }
 .catBus {
   position: absolute;
@@ -264,22 +284,22 @@ body > div {
   width: 250px;
   height: 100px;
   background-image: url('../img/catBus.gif');
-  background-size: contain;
+  background-size: cover;
   background-position: center;
-  z-index: 99;
   animation: name duration timing-function delay iteration-count direction
     fill-mode;
-  animation: moving 50s linear 25s infinite;
+  animation: catBusMoving 50s linear 25s infinite;
 }
 .listOfWorks .works {
   padding: calc(var(--size) * 6) calc(var(--size) * 3) calc(var(--size) * 3)
-    calc(100px + var(--size) * 3);
+    calc(var(--size) * 3);
   justify-content: center;
   display: grid;
   grid-template-columns: repeat(
     auto-fit,
-    minmax(calc(var(--size) * 17), 0.5fr)
+    minmax(calc(var(--size) * 17), 0.25fr)
   );
+  position: relative;
   grid-auto-rows: auto-fit;
   gap: var(--size);
 }
@@ -290,6 +310,7 @@ body > div {
   position: relative;
   cursor: pointer;
 }
+.works .work:focus img,
 .works .work:hover img {
   transform: scale(1.05);
 }
@@ -306,6 +327,7 @@ body > div {
   right: 0;
   backdrop-filter: blur(0);
   z-index: -1;
+  transition: 0.3s;
 }
 .modalBack.on {
   backdrop-filter: blur(3px);
@@ -313,6 +335,7 @@ body > div {
 }
 .listOfWorks .modal {
   position: absolute;
+  min-width: 350px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -321,6 +344,8 @@ body > div {
   background-color: white;
   border-radius: calc(var(--size) * 2);
   overflow: hidden;
+  overflow-y: scroll;
+  transition: 0.3s;
 }
 .listOfWorks .modal::-webkit-scrollbar {
   display: none;
@@ -343,7 +368,7 @@ body > div {
 }
 .modal .modalPoster {
   display: block;
-  width: 20%;
+  width: 25%;
   position: absolute;
   right: calc(var(--size) * 2);
   transform: translateY(-90%);
@@ -367,11 +392,21 @@ body > div {
 .modal .detail strong {
   font-size: calc(var(--size) * 3);
   color: black;
-  width: 70%;
+  width: 65%;
   padding-bottom: var(--size);
 }
 .modal .detail span {
   padding-bottom: var(--size);
+}
+.modal .modalBottomImg {
+  position: relative;
+  padding-bottom: calc(var(--size) * 2);
+  width: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.modal .modalBottomImg img {
+  width: 100%;
 }
 .modalBack .close {
   position: absolute;
@@ -417,35 +452,207 @@ body > div {
   gap: var(--size);
   align-items: center;
   width: 100%;
-  height: 10%;
+  height: 20%;
   top: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   transition: 0.3s;
 }
+.works .work:focus .rtScore,
 .works .work:hover .rtScore {
   transform: translateY(-100%);
 }
 .works .rtScore span {
   display: flex;
-  gap: var(--size);
+  gap: calc(var(--size) / 2);
   align-items: center;
   font-weight: bold;
   height: 50%;
 }
 .works .rtScore span > img {
-  height: 100%;
+  height: 70%;
 }
 .foot {
-  background-color: var(--testHd1);
+  background-color: var(--footBrown);
+  padding: calc(var(--size) * 6) calc(var(--size) * 3) calc(var(--size) * 3)
+    calc(var(--size) * 3);
   height: 400px;
   width: 100%;
+  position: relative;
+  align-items: center;
 }
-@keyframes moving {
+.foot .contact {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: calc(var(--size) * 2);
+  color: var(--gray);
+}
+.foot .contact strong {
+  font-weight: bold;
+  font-size: calc(var(--size) * 3);
+}
+.foot .contact p {
+  line-height: 1.5;
+}
+.foot .contact input {
+  color: var(--gray);
+}
+.foot .contact .emailInput {
+  padding: calc(var(--size) * 0.5) var(--size) calc(var(--size) * 0.5) 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--gray);
+  outline: none;
+}
+
+.foot .contact .emailSubmit {
+  padding: calc(var(--size) * 0.5) var(--size);
+  background-color: transparent;
+  border: 1px solid var(--gray);
+  border-radius: var(--size);
+  transition: 0.3s;
+}
+.foot .contact .emailSubmit:hover {
+  background-color: var(--gray);
+  color: var(--footBrown);
+}
+.ftLogo {
+  right: calc(var(--size) * 4);
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+  width: 30%;
+  padding: var(--size);
+}
+.ftLogo img {
+  width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .banner .info strong {
+    font-size: calc(var(--size) * 3);
+  }
+}
+@media (max-width: 815px) {
+  .banner .info {
+    width: 60%;
+  }
+  .banner .info strong {
+    font-size: calc(var(--size) * 2);
+  }
+  .banner .info span {
+    display: none;
+  }
+  .listOfWorks .works {
+    padding: calc(var(--size) * 6) var(--size) var(--size) var(--size);
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(calc(var(--size) * 12), 1fr)
+    );
+  }
+  .foot {
+    padding: calc(var(--size) * 3) var(--size);
+  }
+  .foot .contact {
+    width: 100%;
+  }
+  .foot .contact strong {
+    font-size: calc(var(--size) * 2);
+  }
+
+  .ftLogo {
+    right: 50%;
+    transform: translateX(50%);
+    top: 70%;
+  }
+}
+@media (max-width: 550px) {
+  .hd {
+    width: 100%;
+    height: 6vh;
+    bottom: 0;
+    flex-direction: row;
+  }
+  .hd h1 {
+    width: calc(var(--size) * 2);
+    position: fixed;
+    padding: 0;
+    left: var(--size);
+    top: var(--size);
+  }
+  .hd h1 img {
+    width: 100%;
+  }
+  .hd .tools {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .hd .searchBack .searchInput {
+    width: calc(100% - 10%);
+  }
+  .hd .searchBack .searchTitle {
+    width: 100%;
+    font-size: var(--size);
+    padding: calc(var(--size) * 0.5) calc(var(--size) * 0.75);
+  }
+  .hd .searchInput .submit {
+    padding: calc(var(--size) * 0.5);
+  }
+  .vertical {
+    width: calc(100%);
+    margin-left: 0;
+  }
+  .loadingBack {
+    width: calc(100%);
+  }
+  .info {
+    visibility: hidden;
+  }
+  .listOfWorks .works {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(calc(var(--size) * 10), 0.5fr)
+    );
+    gap: calc(var(--size) / 2);
+  }
+  .foot {
+    padding: calc(var(--size) * 3) var(--size);
+  }
+  .foot .contact {
+    width: 100%;
+  }
+  .foot .contact strong {
+    font-size: calc(var(--size) * 2);
+  }
+  .ftLogo {
+    right: 50%;
+    transform: translateX(50%);
+    top: 70%;
+  }
+}
+@media (max-width: 425px) {
+  .rtScore strong {
+    font-size: calc(var(--size) * 0.8);
+  }
+  .modal .detail strong {
+    font-size: calc(var(--size) * 2);
+  }
+}
+@keyframes totoroMoving {
   0% {
-    right: -250px;
+    right: -100px;
   }
   100% {
     right: calc(100% + 100px);
+  }
+}
+@keyframes catBusMoving {
+  0% {
+    right: -100px;
+  }
+  100% {
+    right: calc(100% + 250px);
   }
 }
