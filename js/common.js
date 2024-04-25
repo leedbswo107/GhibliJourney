@@ -3,14 +3,13 @@ const loadingBack = document.querySelector('.loadingBack');
 
 const works = document.querySelector('.works');
 const slider = document.querySelector('.slider');
-const slides = slider.querySelectorAll('.slide');
 
 const modalBack = document.querySelector('.modalBack');
 const modal = document.querySelector('.modal');
 const modalCloseBtn = document.querySelector('.modalBack .close');
 
-const searchBtn = document.querySelector('.search');
 const submitBtn = document.querySelector('.submit');
+const searchBtn = document.querySelector('.search');
 const searchBack = document.querySelector('.searchBack');
 const searchTitle = document.querySelector('.searchTitle');
 const searchCloseBtn = document.querySelector('.searchBack .close');
@@ -26,21 +25,10 @@ function renderWorks(jsonData) {
     works.innerHTML = `<li class="noList">검색 결과가 없습니다.</li>`;
     return;
   }
-  const bannerHtml = jsonData
-    .map((slider) => createBannerImgHtml(slider))
-    .join('');
-  const worksHtml = jsonData.map((works) => createWorkHtml(works)).join('');
+  const bannerHtml = jsonData.map(createBannerImgHtml).join('');
+  const worksHtml = jsonData.map(createWorkHtml).join('');
   [works.innerHTML, slider.innerHTML] = [worksHtml, bannerHtml];
-  let swiper = new Swiper('.slideWrap', {
-    effect: 'fade',
-    spaceBetween: 30,
-    slidesPerView: 1,
-    centeredSlides: true,
-    autoplay: {
-      delay: 4000,
-      disableOnInteraction: false,
-    },
-  });
+  initializeSwiper();
 }
 function createBannerImgHtml(slider) {
   return `
@@ -59,10 +47,8 @@ function createBannerImgHtml(slider) {
 }
 function createWorkHtml(works) {
   let score = parseInt(works.rt_score);
-  let rtScoreImg = '';
-  score < 60
-    ? (rtScoreImg = '../img/rottenScore2.svg')
-    : (rtScoreImg = '../img/rottenScore1.svg');
+  const rtScoreImg =
+    score < 60 ? '../img/rottenScore2.svg' : '../img/rottenScore1.svg';
   return `
   <li class="work">
     <img src="${works.image}" alt="${works.original_title}" data-id="${works.id}"/>
@@ -73,6 +59,19 @@ function createWorkHtml(works) {
   </li>
 `;
 }
+function initializeSwiper() {
+  const swiper = new Swiper('.slideWrap', {
+    effect: 'fade',
+    spaceBetween: 30,
+    slidesPerView: 1,
+    centeredSlides: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+  });
+}
+
 function createModalHtml(works) {
   return `
     <div class="modalBanner">
@@ -102,8 +101,7 @@ function createModalHtml(works) {
 async function getModalDetail(e) {
   const dataSet = e.target.dataset.id;
   const modalDetail = await getData(dataSet, null);
-  const modalHtml = createModalHtml(modalDetail[0]);
-  return modalHtml;
+  return createModalHtml(modalDetail[0]);
 }
 async function search(value) {
   const searchData = await getData(null, value);
@@ -116,46 +114,50 @@ async function getData(id, search) {
     if (search) url.searchParams.append('q', search);
 
     const response = await fetch(url);
-    const jsonData = await response.json();
-    return jsonData;
+    return await response.json();
   } catch (error) {
     console.error(error);
   }
+}
+
+function toggleModalBack() {
+  modalBack.classList.toggle('on');
+  wrap.classList.toggle('on');
+}
+
+function toggleSearchBack() {
+  searchTitle.value = '';
+  searchBack.classList.toggle('on');
+  wrap.classList.toggle('on');
+}
+
+function handleSearch() {
+  const inputValue = searchTitle.value;
+  toggleSearchBack();
+  search(inputValue);
+}
+function handleLogoClick() {
+  getWorks();
+}
+function handleModalClose() {
+  modalBack.classList.remove('on');
+  modal.innerHTML = '';
+  wrap.classList.remove('on');
 }
 // modal click event area
 works.addEventListener('click', async (e) => {
   if (e.target.tagName !== 'IMG') return;
   const modalHtml = await getModalDetail(e);
   modal.innerHTML = modalHtml;
-  modalBack.classList.add('on');
+  toggleModalBack();
   modal.scrollTop = 0;
-  wrap.classList.add('on');
 });
-modalCloseBtn.addEventListener('click', () => {
-  modalBack.classList.remove('on');
-  modal.innerHTML.remove;
-  wrap.classList.remove('on');
-});
-searchBtn.addEventListener('click', () => {
-  searchBack.classList.add('on');
-  wrap.classList.add('on');
-});
-searchCloseBtn.addEventListener('click', () => {
-  searchTitle.value = '';
-  searchBack.classList.remove('on');
-  wrap.classList.remove('on');
-});
-submitBtn.addEventListener('click', () => {
-  let inputValue = searchTitle.value;
-  searchBack.classList.remove('on');
-  search(inputValue);
-  inputValue = '';
-  searchTitle.value = '';
-  wrap.classList.remove('on');
-});
-logo.addEventListener('click', () => {
-  getWorks();
-});
+modalCloseBtn.addEventListener('click', () => handleModalClose());
+searchBtn.addEventListener('click', () => toggleSearchBack());
+searchCloseBtn.addEventListener('click', () => toggleSearchBack());
+submitBtn.addEventListener('click', () => handleSearch());
+logo.addEventListener('click', () => handleLogoClick());
+
 document.addEventListener('DOMContentLoaded', function () {
   wrap.classList.add('on');
   setTimeout(() => {
