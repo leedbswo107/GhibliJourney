@@ -270,6 +270,7 @@ body.on {
 .totoro {
   position: absolute;
   top: 0px;
+  left: 100%;
   width: 100px;
   height: 100px;
   background-image: url('../img/movingTotoro.gif');
@@ -280,7 +281,7 @@ body.on {
 .catBus {
   position: absolute;
   top: 0px;
-  right: -250px;
+  left: 100%;
   width: 250px;
   height: 100px;
   background-image: url('../img/catBus.gif');
@@ -640,17 +641,17 @@ body.on {
 }
 @keyframes totoroMoving {
   0% {
-    right: -100px;
+    transform: translateX(0);
   }
   100% {
-    right: calc(100% + 100px);
+    transform: translateX(calc(-100vw - 100px));
   }
 }
 @keyframes catBusMoving {
   0% {
-    right: -100px;
+    transform: translateX(0);
   }
   100% {
-    right: calc(100% + 250px);
+    transform: translateX(calc(-100vw - 250px));
   }
 }
