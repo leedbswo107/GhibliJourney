@@ -49,20 +49,6 @@
 - APi 에서 제공되는 파라미터가 적어 카테고리 및 추가 기능을 구현하는데 제한이 있음.
 - APi 데이터 종류가 적음.
 
-## :file_folder: 파일 구조 및 파일명
-
-- :open_file_folder: petSuppliesWebClone
-  - :memo: index.html
-  - :memo: .gitignore
-  - :open_file_folder: .vscode
-    - :memo: settings.json
-  - :open_file_folder: img
-  - :open_file_folder: js
-    - :memo: common.js
-  - :open_file_folder: css
-    - :memo: style.css
-    - :memo: my_reset.css
-
 ## 참고 사이트
 
 [swiper] <https://swiperjs.com/>  
