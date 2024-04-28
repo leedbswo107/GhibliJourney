@@ -1,6 +1,8 @@
 const logo = document.querySelector('h1 > img');
 const loadingBack = document.querySelector('.loadingBack');
 
+const dirSelect = document.querySelector('#dirSelect');
+
 const works = document.querySelector('.works');
 const slider = document.querySelector('.slider');
 
@@ -15,6 +17,10 @@ const searchTitle = document.querySelector('.searchTitle');
 const searchCloseBtn = document.querySelector('.searchBack .close');
 
 const wrap = document.querySelector('body');
+
+const BASE_URL = 'https://ghibliapi.vercel.app/films/';
+
+console.log(slider.children);
 
 async function getWorks() {
   const data = await getData();
@@ -100,19 +106,23 @@ function createModalHtml(works) {
 }
 async function getModalDetail(e) {
   const dataSet = e.target.dataset.id;
-  const modalDetail = await getData(dataSet, null);
+  const modalDetail = await getData(dataSet);
   return createModalHtml(modalDetail[0]);
 }
 async function search(value) {
   const searchData = await getData(null, value);
   renderWorks(searchData);
 }
-async function getData(id, search) {
-  const url = new URL('https://ghibliapi.vercel.app/films/');
+async function selectDirector(value) {
+  const searchDirector = await getData(null, null, value);
+  renderWorks(searchDirector);
+}
+async function getData(id, search, director) {
+  const url = new URL(`${BASE_URL}`);
+  if (id) url.searchParams.append('id', id);
+  if (search) url.searchParams.append('q', search);
+  if (director) url.searchParams.append('director', director);
   try {
-    if (id) url.searchParams.append('id', id);
-    if (search) url.searchParams.append('q', search);
-
     const response = await fetch(url);
     return await response.json();
   } catch (error) {
@@ -136,6 +146,13 @@ function handleSearch() {
   toggleSearchBack();
   search(inputValue);
 }
+function handleSelect(e) {
+  const selectedValue = e.target.value;
+  selectedValue === 'all'
+    ? selectDirector(null)
+    : selectDirector(selectedValue);
+}
+
 function handleLogoClick() {
   getWorks();
 }
@@ -157,8 +174,9 @@ searchBtn.addEventListener('click', () => toggleSearchBack());
 searchCloseBtn.addEventListener('click', () => toggleSearchBack());
 submitBtn.addEventListener('click', () => handleSearch());
 logo.addEventListener('click', () => handleLogoClick());
+dirSelect.addEventListener('change', (e) => handleSelect(e));
 
-document.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', () => {
   wrap.classList.add('on');
   setTimeout(() => {
     loadingBack.classList.add('off');
