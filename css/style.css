@@ -267,33 +267,92 @@ body.on {
 .listOfWorks {
   position: relative;
 }
-.totoro {
+.animationArea {
+  width: 100%;
+  background-size: contain;
   position: absolute;
+  bottom: 0;
+  z-index: 5;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 10%,
+    rgba(0, 0, 0, 0.25) 25%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.75) 75%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  overflow: hidden;
+}
+.totoro,
+.catBus {
+  position: relative;
+  display: inline-block;
   top: 0px;
   left: 100%;
-  width: 100px;
   height: 100px;
-  background-image: url('../img/movingTotoro.gif');
   background-size: cover;
   background-position: center;
+}
+.totoro {
+  width: 100px;
+  background-image: url('../img/movingTotoro.gif');
   animation: totoroMoving 50s linear infinite;
 }
 .catBus {
-  position: absolute;
-  top: 0px;
-  left: 100%;
   width: 250px;
-  height: 100px;
   background-image: url('../img/catBus.gif');
-  background-size: cover;
-  background-position: center;
-  animation: name duration timing-function delay iteration-count direction
-    fill-mode;
   animation: catBusMoving 50s linear 25s infinite;
 }
+.category {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  top: 50%;
+  transform: translateY(-50%);
+  justify-content: end;
+  padding-right: calc(var(--size) * 2);
+}
+.category label {
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--woodBrown);
+  width: fit-content;
+  height: calc(var(--size) * 2);
+  border-radius: var(--size);
+  line-height: 1;
+  /* position: absolute; */
+  padding: 0 calc(var(--size));
+  align-items: center;
+  right: calc(var(--size) * 2);
+  z-index: 1;
+  background-color: var(--beige);
+}
+#dirSelect {
+  position: relative;
+  background-color: var(--beige);
+  border: none;
+  outline: none;
+  padding-left: var(--size);
+}
+.category .selectCon {
+  display: inline-block;
+  position: relative;
+}
+.category .selectCon::before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: calc(var(--size) / 2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: calc(var(--size) * 2);
+  background-color: var(--woodBrown);
+  z-index: 1;
+}
 .listOfWorks .works {
-  padding: calc(var(--size) * 6) calc(var(--size) * 3) calc(var(--size) * 3)
-    calc(var(--size) * 3);
+  padding: var(--size);
   justify-content: center;
   display: grid;
   grid-template-columns: repeat(
@@ -326,6 +385,10 @@ body.on {
   left: 0;
   bottom: 0;
   right: 0;
+  padding: 0 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   backdrop-filter: blur(0);
   z-index: -1;
 }
@@ -334,12 +397,8 @@ body.on {
   z-index: 101;
 }
 .listOfWorks .modal {
-  position: absolute;
-  min-width: 350px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% * 0.6);
+  position: relative;
+  width: 100%;
   height: calc(100% * 0.7);
   background-color: white;
   border-radius: calc(var(--size) * 2);
@@ -408,11 +467,11 @@ body.on {
   width: 100%;
 }
 .modalBack .close {
-  position: absolute;
+  position: relative;
   width: calc(var(--size) * 2);
   height: calc(var(--size) * 2);
-  top: 18%;
-  right: 22%;
+  top: calc(var(--size) * 3);
+  left: calc(100% - var(--size) * 3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -544,7 +603,6 @@ body.on {
     display: none;
   }
   .listOfWorks .works {
-    padding: calc(var(--size) * 6) var(--size) var(--size) var(--size);
     grid-template-columns: repeat(
       auto-fit,
       minmax(calc(var(--size) * 12), 1fr)
@@ -616,6 +674,9 @@ body.on {
     );
     gap: calc(var(--size) / 2);
   }
+  .modalBack {
+    padding: 0 10%;
+  }
   .foot {
     padding: calc(var(--size) * 3) var(--size);
   }
@@ -637,6 +698,16 @@ body.on {
   }
   .modal .detail strong {
     font-size: calc(var(--size) * 2);
+  }
+  .animationArea {
+    height: 50px;
+  }
+  .totoro,
+  .catBus {
+    display: none;
+  }
+  .category {
+    opacity: 0.7;
   }
 }
 @keyframes totoroMoving {
