@@ -54,7 +54,7 @@ function createBannerImgHtml(slider) {
 function createWorkHtml(works) {
   let score = parseInt(works.rt_score);
   const rtScoreImg =
-    score < 60 ? '../img/rottenScore2.svg' : '../img/rottenScore1.svg';
+    score < 60 ? 'https://leedbswo107.github.io/ghibli_journey/img/rottenScore2.svg' : 'https://leedbswo107.github.io/ghibli_journey/img/rottenScore1.svg';
   return `
   <li class="work">
     <img src="${works.image}" alt="${works.original_title}" data-id="${works.id}"/>
